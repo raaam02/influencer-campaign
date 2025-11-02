@@ -1,121 +1,81 @@
 import { useEffect, useState } from "react";
-import axiosClient from "@/api/axiosClient";
+import { CampaignCard } from "@/components/CampaignCard";
+import { useCampaigns } from "@/hooks/useCampaigns";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/skeleton";
 import { toast } from "sonner";
 
-interface Influencer {
-  id: number;
-  name: string;
-  followers: number;
-  platform: string;
-  category: string;
-}
-
-interface Campaign {
-  id: number;
-  name: string;
-  budget: number;
-  start_date: string;
-  end_date: string;
-  status: string;
-  influencers: Influencer[];
-  total_influencers: number;
-  total_followers: number;
-}
-
 export default function CampaignList() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchCampaigns = async () => {
-    setLoading(true);
-    try {
-      const res = await axiosClient.get("campaigns");
-      setCampaigns(res.data.data || []);
-    } catch (err) {
-      toast.error("Failed to load campaigns.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data: campaigns, loading, error, refresh } = useCampaigns();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    fetchCampaigns();
-  }, []);
+    if (error) toast.error(error);
+  }, [error]);
 
-  if (loading)
-    return <p className="text-center py-10 text-[--muted-foreground]">Loading...</p>;
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refresh();
+    // small delay for shimmer effect
+    setTimeout(() => setRefreshing(false), 600);
+  };
+
+  if (loading || refreshing) {
+    return (
+      <div className="max-w-5xl mx-auto p-6 space-y-6">
+        <div className="flex justify-between items-center">
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-8 w-24" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[...Array(6)].map((_, i) => (
+            <Card key={i} className="rounded-xl border border-[--border]">
+              <CardContent className="p-4 space-y-3">
+                <Skeleton className="h-5 w-40" />
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-4 w-32" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-[--foreground]">Campaigns</h1>
+    <section id="campaigns" className="max-w-5xl mx-auto p-6 space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold text-[--foreground]">
+            Active Campaigns
+          </h1>
+          <p className="text-[--muted-foreground] text-sm">
+            Manage and monitor all campaigns
+          </p>
+        </div>
         <Button
           variant="outline"
-          onClick={fetchCampaigns}
-          className="border-[--border] text-[--primary]"
+          onClick={handleRefresh}
+          className="text-[--primary] border-[--border]"
         >
-          Refresh
+          ↻ Refresh
         </Button>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {campaigns.length === 0 ? (
-          <p className="col-span-full text-center text-[--muted-foreground]">
-            No campaigns found.
-          </p>
-        ) : (
-          campaigns.map((c) => (
-            <div
-              key={c.id}
-              className="bg-[--card] border border-[--border] rounded-2xl p-5 shadow-sm hover:shadow-md transition-all"
-            >
-              <div className="flex justify-between items-start mb-2">
-                <h2 className="text-lg font-semibold text-[--foreground]">
-                  {c.name}
-                </h2>
-                <span className="text-xs px-2 py-1 rounded-md bg-[--muted] text-[--muted-foreground] capitalize">
-                  {c.status}
-                </span>
-              </div>
-
-              <p className="text-sm text-[--muted-foreground]">
-                Budget: ₹<span className="text-[--foreground]">{c.budget}</span>
-              </p>
-              <p className="text-sm text-[--muted-foreground]">
-                Period:{" "}
-                <span className="text-[--foreground]">
-                  {c.start_date} → {c.end_date}
-                </span>
-              </p>
-
-              <div className="mt-3 border-t border-[--border] pt-3 flex justify-between text-sm">
-                <span className="text-[--muted-foreground]">
-                  Influencers:{" "}
-                  <span className="font-semibold text-[--foreground]">
-                    {c.total_influencers}
-                  </span>
-                </span>
-                <span className="text-[--muted-foreground]">
-                  Followers:{" "}
-                  <span className="font-semibold text-[--foreground]">
-                    {c.total_followers.toLocaleString()}
-                  </span>
-                </span>
-              </div>
-
-              <div className="mt-4 flex justify-end">
-                <Link to={`/campaign/${c.id}`}>
-                  <Button variant="secondary" className="rounded-lg text-[--primary]">
-                    View Details
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-    </div>
+      {/* Campaign List */}
+      {campaigns.length === 0 ? (
+        <p className="text-center text-[--muted-foreground] py-10">
+          No campaigns found. Try adding one!
+        </p>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {campaigns.map((c) => (
+            <CampaignCard key={c.id} campaign={c} />
+          ))}
+        </div>
+      )}
+    </section>
   );
 }

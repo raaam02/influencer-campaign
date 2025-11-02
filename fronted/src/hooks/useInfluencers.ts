@@ -1,4 +1,3 @@
-// src/hooks/useInfluencers.ts
 import { useEffect, useState } from "react";
 import axiosClient from "@/api/axiosClient";
 
