@@ -98,7 +98,7 @@ export default function AddCampaign() {
 
       {/* Form Card */}
       <Card className="border-border shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/60 to-primary"></div>
+        <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-primary via-primary/60 to-primary"></div>
         
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold flex items-center gap-2">
@@ -243,7 +243,7 @@ export default function AddCampaign() {
 
             {/* Info Card */}
             {form.name && form.budget && form.start_date && form.end_date && Object.keys(errors).length === 0 && (
-              <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 animate-in slide-in-from-bottom-2">
+              <Card className="border-primary/20 bg-linear-to-br from-primary/5 to-primary/10 animate-in slide-in-from-bottom-2">
                 <CardContent className="pt-4 pb-4">
                   <div className="flex items-center gap-2 text-sm text-foreground">
                     <Sparkles className="w-4 h-4 text-primary" />

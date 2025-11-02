@@ -41,13 +41,11 @@ const platformColors = {
 export function AssignInfluencerForm({ campaignId }: AssignInfluencerFormProps) {
   const { data: campaigns, loading: loadingCampaigns } = useCampaigns();
   const { data: influencers, loading: loadingInfluencers } = useInfluencers();
-  const { assignInfluencers, loading: assigning } = useAssignInfluencers(
-    campaignId || ""
-  );
-
+  
   const [selectedCampaign, setSelectedCampaign] = useState<string>(
     campaignId ? String(campaignId) : ""
   );
+  const { assignInfluencers, loading: assigning } = useAssignInfluencers(selectedCampaign);
   const [selectedInfluencers, setSelectedInfluencers] = useState<number[]>([]);
 
   const currentCampaign = useMemo(

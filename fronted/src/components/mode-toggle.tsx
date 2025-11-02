@@ -1,5 +1,4 @@
 import { Moon, Sun, Monitor, Check } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -10,11 +9,17 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/components/theme-provider"
+import type { Theme } from "@/components/theme-provider"
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()
 
-  const themes = [
+  const themes: {
+    value: Theme
+    label: string
+    icon: React.ComponentType<{ className?: string }>
+    description: string
+  }[] = [
     {
       value: "light",
       label: "Light",
@@ -48,6 +53,7 @@ export function ModeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent 
         align="end" 
         className="w-48 rounded-xl border-border shadow-lg"
@@ -58,8 +64,8 @@ export function ModeToggle() {
         <DropdownMenuSeparator className="bg-border" />
         
         {themes.map((themeOption) => {
-          const Icon = themeOption.icon;
-          const isActive = theme === themeOption.value;
+          const Icon = themeOption.icon
+          const isActive = theme === themeOption.value
           
           return (
             <DropdownMenuItem 
@@ -91,7 +97,7 @@ export function ModeToggle() {
                 </span>
               </div>
             </DropdownMenuItem>
-          );
+          )
         })}
       </DropdownMenuContent>
     </DropdownMenu>

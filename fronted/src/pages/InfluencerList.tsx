@@ -144,7 +144,7 @@ export default function InfluencersPage() {
       </div>
 
       {/* Filters Card */}
-      <Card className="border-border bg-gradient-to-br from-card to-muted/20 shadow-md hover:shadow-lg transition-all duration-300">
+      <Card className="border-border bg-linear-to-br from-card to-muted/20 shadow-md hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
           <div className="flex items-center gap-2 mb-4">
             <Filter className="w-5 h-5 text-primary" />
