@@ -1,0 +1,137 @@
+{
+  "info": {
+    "_postman_id": "7ae7de4e-461d-471b-a81b-5fbff4715077",
+    "name": "influencer-campaign",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "id": "fb060fcb-3864-4e94-988a-fda041c1e633",
+      "name": "Compaign",
+      "item": [
+        {
+          "id": "c3df29e0-eceb-4f50-8680-d01ff89599fa",
+          "name": "Assign Influencers",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"influencer_ids\": [1, 2]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}campaigns/2/assign",
+              "host": [
+                "{{baseURL}}campaigns"
+              ],
+              "path": [
+                "2",
+                "assign"
+              ],
+              "protocol": "https"
+            }
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "b9789976-8434-4908-8f83-b3bfb53794b5",
+          "name": "Create campaigns",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Promo\",\n  \"budget\": 50000,\n  \"start_date\": \"2025-11-01\",\n  \"end_date\": \"2025-10-20\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}campaigns",
+              "host": [
+                "{{baseURL}}campaigns"
+              ],
+              "path": [],
+              "protocol": "https"
+            }
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "a3681723-ba61-4d87-83e5-9e6a33ec0c1f",
+          "name": "Get Campaigns",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}campaigns",
+              "host": [
+                "{{baseURL}}campaigns"
+              ],
+              "path": [],
+              "protocol": "https"
+            }
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "cebb7c51-b069-4940-947e-be8ffeec1192",
+          "name": "Get Influencers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}influencers",
+              "host": [
+                "{{baseURL}}influencers"
+              ],
+              "path": [],
+              "protocol": "https"
+            }
+          },
+          "response": [],
+          "event": []
+        },
+        {
+          "id": "dffc8efc-24ad-4408-b063-aa374b089006",
+          "name": "Single Campaigns",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}campaigns/1",
+              "host": [
+                "{{baseURL}}campaigns"
+              ],
+              "path": [
+                "1"
+              ],
+              "protocol": "https"
+            }
+          },
+          "response": [],
+          "event": []
+        }
+      ],
+      "variable": []
+    }
+  ],
+  "variable": [
+    {
+      "id": "fef236d4-8d1b-4dd1-b46d-e23dcf6c2a73",
+      "key": "baseURL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
