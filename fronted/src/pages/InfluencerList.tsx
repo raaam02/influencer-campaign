@@ -19,7 +19,8 @@ import {
   Filter, 
   Users, 
   Sparkles,
-  TrendingUp 
+  TrendingUp, 
+  X
 } from "lucide-react";
 
 export default function InfluencersPage() {
@@ -152,13 +153,30 @@ export default function InfluencersPage() {
       {/* Filters Card */}
       <Card className="border-border bg-linear-to-br from-card to-muted/20 shadow-md hover:shadow-lg transition-all duration-300">
         <CardContent className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Filter className="w-5 h-5 text-primary" />
-            <h3 className="font-semibold text-foreground">Filters</h3>
+          <div className="flex justify-between">
+            <div className="flex items-center gap-2 mb-4">
+              <Filter className="w-5 h-5 text-primary" />
+              <h3 className="font-semibold text-foreground">Filters</h3>
+              {activeFilters > 0 && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-primary text-primary-foreground">
+                  {activeFilters}
+                </span>
+              )}
+            </div>
+
+            {/* Clear Filters */}
             {activeFilters > 0 && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-primary text-primary-foreground">
-                {activeFilters}
-              </span>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setSearch("");
+                  setPlatform("all");
+                  setCategory("all");
+                }}
+                className="shrink-0 text-muted-foreground hover:text-foreground rounded-lg"
+              >
+                <X className="w-4 h-4" />Clear
+              </Button>
             )}
           </div>
           
@@ -217,20 +235,6 @@ export default function InfluencersPage() {
               <Users className="w-4 h-4 text-muted-foreground" />
             </div>
 
-            {/* Clear Filters */}
-            {activeFilters > 0 && (
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setSearch("");
-                  setPlatform("all");
-                  setCategory("all");
-                }}
-                className="shrink-0 text-muted-foreground hover:text-foreground rounded-lg"
-              >
-                Clear
-              </Button>
-            )}
           </div>
         </CardContent>
       </Card>
