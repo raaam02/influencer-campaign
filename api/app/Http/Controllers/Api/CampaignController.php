@@ -51,14 +51,37 @@ class CampaignController extends Controller
     public function assignInfluencers(AssignInfluencersRequest $request, $campaignId)
     {
         $campaign = Campaign::find($campaignId);
+
         if (!$campaign) {
             return response()->json(['message' => 'Campaign not found'], 404);
         }
 
         $ids = $request->validated()['influencer_ids'];
-        $campaign->influencers()->syncWithoutDetaching($ids);
 
-        foreach ($ids as $infId) {
+        // Get existing influencer IDs already assigned to this campaign
+        $existing = $campaign->influencers()
+            ->whereIn('influencer_id', $ids)
+            ->pluck('influencer_id')
+            ->toArray();
+
+        // Detect duplicates
+        $alreadyAssigned = Influencer::whereIn('id', $existing)->pluck('name')->toArray();
+
+        // Filter new ones only
+        $newIds = array_diff($ids, $existing);
+
+        if (empty($newIds)) {
+            return response()->json([
+                'message' => 'Selected influencers are already assigned to this campaign.',
+                'already_assigned' => $alreadyAssigned,
+            ], 422);
+        }
+
+        // Sync new influencers without removing existing ones
+        $campaign->influencers()->syncWithoutDetaching($newIds);
+
+        // Dispatch jobs only for newly added influencers
+        foreach ($newIds as $infId) {
             $influencer = Influencer::find($infId);
             if ($influencer) {
                 SendAssignedEmailJob::dispatch($influencer, $campaign);
@@ -66,7 +89,15 @@ class CampaignController extends Controller
         }
 
         $campaign->load('influencers');
-        return new CampaignResource($campaign);
+
+        $response = [
+            'message' => 'Influencers assigned successfully.',
+            'newly_assigned_count' => count($newIds),
+            'already_assigned' => $alreadyAssigned,
+            'campaign' => new CampaignResource($campaign),
+        ];
+
+        return response()->json($response, 200);
     }
 
 }

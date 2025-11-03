@@ -24,9 +24,9 @@ export const useAssignInfluencers = (campaignId?: string | number) => {
 
       toast.success("Influencers assigned successfully 🎉");
       navigate(`/campaign/${campaignId}`);
-    } catch (err) {
-      console.error(err);
-      const msg = "Failed to assign influencers.";
+    } catch (err: any) {
+      console.error(err.response.data.message);
+      const msg = err.response.data.message || "Failed to assign influencers.";
       setError(msg);
       toast.error(msg);
     } finally {
