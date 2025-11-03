@@ -53,3 +53,89 @@ This project allows brands to manage marketing campaigns, assign influencers, an
 ```bash
 git clone https://github.com/yourusername/influencer-campaign.git
 cd influencer-campaign
+```
+
+### 2️⃣ Backend Setup
+```bash
+cd api
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate --seed
+```
+
+### 3️⃣ Frontend Setup
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+
+---
+
+## API Endpoints
+
+| Method   | Endpoint                     | Description                                                                  |
+| -------- | ---------------------------- | ---------------------------------------------------------------------------- |
+| **POST** | `/api/campaigns`             | Create a new campaign                                                        |
+| **GET**  | `/api/campaigns`             | List all campaigns (with influencers + totals)                               |
+| **GET**  | `/api/influencers`           | List influencers (supports filters: `platform`, `category`, `min_followers`) |
+| **POST** | `/api/campaigns/{id}/assign` | Assign one or more influencers to a campaign                                 |
+
+
+--- 
+
+### 🧩 Filtering Examples
+```bash
+GET /api/influencers?platform=youtube&min_followers=10000
+```
+
+---
+
+### ✉️ Queue Job — Simulated Email Sending
+
+```bash
+SendAssignedEmailJob::dispatch($influencer, $campaign);
+```
+
+#### It currently logs messages like:
+```bash
+📩 Simulated email sent to influencer 'John Doe' for campaign 'Winter Launch'.
+```
+
+---
+
+### ⏰ Scheduled Command — Auto-Complete Campaigns
+
+```bash
+php artisan campaigns:mark-completed
+```
+
+### 💅 Frontend Highlights
+
+- Beautiful, consistent layout with navbar, hero section, and themed pages
+- Campaign and influencer cards with stats and badges
+- Skeleton loaders for seamless UX
+- Rich filtering, sorting, and refresh functionality
+- Theme toggle (Light / Dark / System) with smooth animations
+
+---
+
+## Current Status
+
+| Area                           | Status                                |
+| ------------------------------ | ------------------------------------- |
+| Laravel API                    | ✅ Complete                            |
+| React Frontend                 | ✅ Complete                            |
+| Influencer Filters             | ✅ Platform + Category + Min Followers |
+| Campaign Creation & Assignment | ✅ Functional                          |
+| Email Queue Job                | ✅ Simulated & Ready for Real          |
+| Scheduled Command              | ✅ Tested & Works                      |
+| UI/UX                          | ✅ Polished and Consistent             |
+
+---
+
+# 👨‍💻 Author
+##### Ramdyal Prajapati (Ram)
+💼 Full Stack Developer
+📧 [prajapatiram983@gmail.com](mailto:prajapatiram983@gmail.com)
