@@ -30,6 +30,7 @@ export default function InfluencersPage() {
   const [search, setSearch] = useState("");
   const [platform, setPlatform] = useState("all");
   const [category, setCategory] = useState("all");
+  const [minFollowers, setMinFollowers] = useState(0);
 
   useEffect(() => {
     if (error) toast.error(error);
@@ -52,8 +53,12 @@ export default function InfluencersPage() {
       list = list.filter((inf) => inf.category === category);
     }
 
+    if (minFollowers > 0) {
+      list = list.filter((inf) => inf.followers >= minFollowers);
+    }
+
     setFiltered(list);
-  }, [search, platform, category, influencers]);
+  }, [search, platform, category, influencers, minFollowers]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -71,7 +76,8 @@ export default function InfluencersPage() {
   const activeFilters = [
     platform !== "all",
     category !== "all",
-    search.trim() !== ""
+    search.trim() !== "",
+    minFollowers !== 0
   ].filter(Boolean).length;
 
   if (loading || refreshing) {
@@ -197,6 +203,19 @@ export default function InfluencersPage() {
                 ))}
               </SelectContent>
             </Select>
+
+            {/* Minimum Followers */}
+            <div className="flex items-center gap-2 w-full sm:w-48">
+              <Input
+                type="number"
+                min={0}
+                placeholder="Min Followers"
+                value={minFollowers || ""}
+                onChange={(e) => setMinFollowers(Number(e.target.value) || 0)}
+                className="bg-background border-border focus-visible:ring-primary rounded-lg"
+              />
+              <Users className="w-4 h-4 text-muted-foreground" />
+            </div>
 
             {/* Clear Filters */}
             {activeFilters > 0 && (

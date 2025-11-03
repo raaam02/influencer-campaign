@@ -20,8 +20,8 @@ export function CampaignCard({ campaign }: Props) {
 
   return (
     <Card className="group relative overflow-hidden border-border hover:shadow-xl hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]">
-      {/* Gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      {/* linear overlay on hover */}
+      <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       
       <CardHeader className="pb-4 relative">
         <div className="flex justify-between items-start gap-3">
