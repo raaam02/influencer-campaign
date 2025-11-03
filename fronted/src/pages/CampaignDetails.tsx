@@ -236,7 +236,7 @@ export default function CampaignDetails() {
                   key={inf.id}
                   className="group border-border bg-card hover:shadow-xl hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   
                   <CardHeader className="pb-3 relative">
                     <div className="flex justify-between items-start gap-3">

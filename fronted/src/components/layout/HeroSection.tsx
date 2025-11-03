@@ -1,4 +1,4 @@
-import { Sparkles, TrendingUp, Users, ArrowRight, Play, Zap } from 'lucide-react';
+import { Sparkles, TrendingUp, Users, ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function HeroSection() {
@@ -11,7 +11,7 @@ export function HeroSection() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/10 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
         
         {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-linear(to_right,hsl(var(--border))_1px,transparent_1px),linear-linear(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-linear(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-20"></div>
+        <div className="absolute inset-0 bg-[linear-linear(to_right,hsl(var(--border))_1px,transparent_1px),linear-linear(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-linear(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-20"></div>
       </div>
 
       <div className="relative max-w-6xl mx-auto py-24 lg:py-32">
@@ -34,7 +34,7 @@ export function HeroSection() {
                 <span className="block text-foreground animate-in slide-in-from-bottom-4 duration-1000">
                   Manage Campaigns
                 </span>
-                <span className="block bg-linear-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent animate-in slide-in-from-bottom-4 duration-1000 delay-150 bg-[length:200%_auto] animate-linear">
+                <span className="block bg-linear-to-r from-primary via-primary to-primary/60 bg-clip-text text-transparent animate-in slide-in-from-bottom-4 duration-1000 delay-150 bg-size-[200%_auto] animate-linear">
                   Effortlessly
                 </span>
               </h1>
@@ -56,7 +56,7 @@ export function HeroSection() {
               href="#campaigns"
               className="group relative px-8 py-4 bg-linear-to-r from-primary to-primary/90 text-primary-foreground rounded-xl font-semibold shadow-lg hover:shadow-2xl hover:shadow-primary/50 hover:scale-105 transition-all duration-300 overflow-hidden"
             >
-              <div className="absolute inset-0 bg-linear-to-r from-primary/0 via-white/20 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-primary/0 via-white/20 to-primary/0 translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               <span className="relative z-10 flex items-center gap-2">
                 View Campaigns
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
