@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('budget', 12, 2)->default(0);
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['active','completed','draft'])->default('draft');
+            $table->enum('status', ['active','completed','upcoming'])->default('active');
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->timestamps();
 
